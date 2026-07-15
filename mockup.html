@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Feed Mockup</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700;800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+        :root {
+            --bg: #14161C;
+            --bg-alt: #1B1E27;
+            --slip: #F5F0E6;
+            --slip-line: #D8D0BE;
+            --ink: #EDEDEF;
+            --ink-dim: #9A9DA8;
+            --green: #3DDC84;
+            --amber: #FFB020;
+            --line: #2A2D38;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .phone {
+            width: 420px;
+            min-height: 900px;
+            background: var(--bg);
+            border-left: 1px solid var(--line);
+            border-right: 1px solid var(--line);
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(20, 22, 28, 0.92);
+            backdrop-filter: blur(8px);
+            padding: 18px 20px 14px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brand {
+            font-family: 'Archivo Expanded', sans-serif;
+            font-weight: 800;
+            font-size: 22px;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand .dot {
+            color: var(--green);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 22px;
+            margin-top: 16px;
+        }
+
+        .tab {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-dim);
+            padding-bottom: 10px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--ink);
+            border-bottom: 2px solid var(--green);
+        }
+
+        .subnav {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            overflow-x: auto;
+        }
+
+        .chip {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ink-dim);
+            background: var(--bg-alt);
+            border: 1px solid var(--line);
+            padding: 6px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .chip.active {
+            color: #0C1410;
+            background: var(--green);
+            border-color: var(--green);
+        }
+
+        /* Feed */
+        .feed {
+            padding: 16px 16px 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .empty-hint {
+            font-size: 12px;
+            color: var(--ink-dim);
+            padding: 2px 4px 4px;
+        }
+
+        /* Ticket card styled like a betting slip */
+        .ticket {
+            background: var(--slip);
+            color: #1C1B18;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .ticket::before,
+        .ticket::after {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: var(--bg);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .ticket::before {
+            left: -11px;
+        }
+
+        .ticket::after {
+            right: -11px;
+        }
+
+        .t-top {
+            padding: 14px 18px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .poster {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3DDC84, #1E9E5A);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: #0C1410;
+        }
+
+        .poster-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .poster-meta {
+            font-size: 11px;
+            color: #6B6858;
+        }
+
+        .platform-badge {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            background: #1C1B18;
+            color: var(--slip);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .perforation {
+            border-top: 2px dashed var(--slip-line);
+            margin: 0 0;
+        }
+
+        .t-body {
+            padding: 14px 18px;
+        }
+
+        .picks {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .pick-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 13px;
+        }
+
+        .pick-name {
+            font-weight: 600;
+        }
+
+        .pick-market {
+            color: #6B6858;
+            font-size: 11px;
+        }
+
+        .t-note {
+            font-size: 13px;
+            color: #3A3730;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .t-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .t-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 4px;
+        }
+
+        .odds-block {
+            font-family: 'Space Mono', monospace;
+        }
+
+        .odds-label {
+            font-size: 10px;
+            color: #6B6858;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .odds-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0C1410;
+        }
+
+        .stake-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: #7A5A00;
+            background: #FCE8B0;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .streak-badge {
+            font-size: 11px;
+            font-weight: 700;
+            color: #B34700;
+            background: #FFE3CC;
+            padding: 3px 9px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .self-reported {
+            font-size: 9px;
+            font-weight: 600;
+            color: #8A8672;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .status-pending {
+            font-size: 11px;
+            font-weight: 700;
+            color: #5A5240;
+            background: #E8E2D0;
+            padding: 3px 9px;
+            border-radius: 20px;
+        }
+
+        .status-won {
+            font-size: 11px;
+            font-weight: 700;
+            color: #0C6B3A;
+            background: #CFF3DE;
+            padding: 3px 9px;
+            border-radius: 20px;
+        }
+
+        .status-lost {
+            font-size: 11px;
+            font-weight: 700;
+            color: #8A2020;
+            background: #F5D6D6;
+            padding: 3px 9px;
+            border-radius: 20px;
+        }
+
+        .pre-reactions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .reaction-btn {
+            font-size: 12px;
+            font-weight: 600;
+            background: #EDE7D8;
+            color: #3A3730;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .reaction-btn .count {
+            color: #8A8672;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .action {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ink-dim);
+            background: var(--bg-alt);
+        }
+
+        .action.follow {
+            color: #0C1410;
+            background: var(--green);
+        }
+
+        .action.flag {
+            color: #C97C7C;
+        }
+
+        .action:first-child {
+            border-bottom-left-radius: 0;
+        }
+
+        .timestamp {
+            font-size: 10px;
+            color: var(--ink-dim);
+            text-align: right;
+            padding: 0 4px;
+        }
+
+        /* Bottom nav */
+        nav.bottom {
+            position: fixed;
+            bottom: 0;
+            width: 420px;
+            background: var(--bg-alt);
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 16px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            color: var(--ink-dim);
+        }
+
+        .nav-item.active {
+            color: var(--green);
+        }
+
+        .nav-icon {
+            width: 22px;
+            height: 22px;
+        }
+
+        .post-fab {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0C1410;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: -24px;
+            box-shadow: 0 4px 14px rgba(61, 220, 132, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="phone">
+        <header>
+            <div class="brand"><span class="dot">●</span> TICKETSLIP</div>
+            <div class="tabs">
+                <div class="tab active">Following</div>
+                <div class="tab">Global</div>
+            </div>
+            <div class="subnav">
+                <div class="chip active">🔥 Streaks</div>
+                <div class="chip">💪 Boldest picks</div>
+                <div class="chip">🆕 Newest</div>
+                <div class="chip">⏰ Kicking off soon</div>
+            </div>
+        </header>
+
+        <div class="feed">
+            <div class="empty-hint">Picks post before kickoff — no editing once posted.</div>
+
+            <!-- Ticket 1 -->
+            <div class="ticket">
+                <div class="t-top">
+                    <div class="poster">
+                        <div class="avatar">TK</div>
+                        <div>
+                            <div class="poster-name">Tumi_Kicks</div>
+                            <div class="poster-meta">241 followers · <span class="self-reported">self-reported</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="platform-badge">Betway</div>
+                </div>
+                <div style="padding:0 18px 10px; display:flex; gap:8px;">
+                    <span class="streak-badge">🔥 4W streak</span>
+                    <span class="status-pending">⏳ Pending — kicks off Sat 14:00</span>
+                </div>
+                <div class="perforation"></div>
+                <div class="t-body">
+                    <div class="picks">
+                        <div class="pick-row">
+                            <span class="pick-name">Kaizer Chiefs to win</span>
+                            <span class="pick-market">Match Result</span>
+                        </div>
+                        <div class="pick-row">
+                            <span class="pick-name">Over 2.5 Goals</span>
+                            <span class="pick-market">Total Goals</span>
+                        </div>
+                    </div>
+                    <div class="t-note">Chiefs have won 4 of last 5 at home, defense has been shaky both ends. Locking
+                        this in early.</div>
+                    <div class="pre-reactions">
+                        <div class="reaction-btn">🔥 I'm on this <span class="count">18</span></div>
+                        <div class="reaction-btn">😬 Risky <span class="count">6</span></div>
+                    </div>
+                    <div class="t-footer">
+                        <div class="odds-block">
+                            <div class="odds-label">Total Odds</div>
+                            <div class="odds-value">4.80</div>
+                        </div>
+                        <div class="stake-tag">3-leg multi</div>
+                    </div>
+                </div>
+                <div class="timestamp" style="padding:0 18px 10px;">Posted 6h before kickoff · Sat 14:00</div>
+                <div class="actions">
+                    <div class="action">💬 Comment</div>
+                    <div class="action flag">🚩 Flag</div>
+                    <div class="action follow">+ Follow</div>
+                </div>
+            </div>
+
+            <!-- Ticket 2 with image -->
+            <div class="ticket">
+                <div class="t-top">
+                    <div class="poster">
+                        <div class="avatar" style="background:linear-gradient(135deg,#FFB020,#C97C00); color:#2A1B00;">
+                            NP</div>
+                        <div>
+                            <div class="poster-name">NoPressure_Bets</div>
+                            <div class="poster-meta">1,204 followers · <span class="self-reported">self-reported</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="platform-badge">Hollywoodbets</div>
+                </div>
+                <div style="padding:0 18px 10px; display:flex; gap:8px;">
+                    <span class="status-won">✓ Won</span>
+                    <span style="font-size:11px; color:var(--ink-dim);">2 🚩 flags</span>
+                </div>
+                <div class="perforation"></div>
+                <div class="t-body">
+                    <div class="t-note" style="margin-bottom:10px; font-weight:600;">Weekend accumulator 🔒</div>
+                    <img class="t-image"
+                        src="https://placehold.co/380x160/1C1B18/F5F0E6?font=roboto&text=Bet+slip+screenshot"
+                        alt="ticket screenshot" />
+                    <div class="t-footer">
+                        <div class="odds-block">
+                            <div class="odds-label">Total Odds</div>
+                            <div class="odds-value">12.35</div>
+                        </div>
+                        <div class="stake-tag">5-leg multi</div>
+                    </div>
+                </div>
+                <div class="timestamp" style="padding:0 18px 10px;">Posted 1d before kickoff · Sun 15:30</div>
+                <div class="actions">
+                    <div class="action">💬 Comment</div>
+                    <div class="action flag">🚩 Flag</div>
+                    <div class="action follow">✓ Following</div>
+                </div>
+            </div>
+
+            <!-- Ticket 3 - heavily flagged example -->
+            <div class="ticket">
+                <div class="t-top">
+                    <div class="poster">
+                        <div class="avatar" style="background:linear-gradient(135deg,#8A8672,#5A5648); color:#F5F0E6;">
+                            QW</div>
+                        <div>
+                            <div class="poster-name">QuickWinsZA</div>
+                            <div class="poster-meta">89 followers · <span class="self-reported">self-reported</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="platform-badge">Betway</div>
+                </div>
+                <div style="padding:0 18px 10px; display:flex; gap:8px; align-items:center;">
+                    <span class="status-won">✓ Won</span>
+                    <span style="font-size:11px; color:#C97C7C; font-weight:700;">⚠ 14 🚩 flags</span>
+                </div>
+                <div class="perforation"></div>
+                <div class="t-body">
+                    <div class="picks">
+                        <div class="pick-row">
+                            <span class="pick-name">Man United to win</span>
+                            <span class="pick-market">Match Result</span>
+                        </div>
+                    </div>
+                    <div class="t-note">Easy money 💰💰</div>
+                    <div class="t-footer">
+                        <div class="odds-block">
+                            <div class="odds-label">Total Odds</div>
+                            <div class="odds-value">2.10</div>
+                        </div>
+                        <div class="stake-tag">Single</div>
+                    </div>
+                </div>
+                <div class="timestamp" style="padding:0 18px 10px;">Posted 2h before kickoff · Fri 20:00</div>
+                <div class="actions">
+                    <div class="action">💬 Comment</div>
+                    <div class="action flag">🚩 Flag</div>
+                    <div class="action follow">+ Follow</div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="bottom">
+            <div class="nav-item active"><span class="nav-icon">🏠</span>Feed</div>
+            <div class="nav-item"><span class="nav-icon">🔍</span>Discover</div>
+            <div class="post-fab">+</div>
+            <div class="nav-item"><span class="nav-icon">🔔</span>Alerts</div>
+            <div class="nav-item"><span class="nav-icon">👤</span>Profile</div>
+        </nav>
+    </div>
+</body>
+
+</html>
