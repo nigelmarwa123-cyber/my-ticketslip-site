@@ -75,10 +75,10 @@ export default async function TicketDetailPage(props: { params: Promise<{ id: st
             Match kicked off! What was the result?
           </div>
           <div style={{ display: 'flex', gap: '12px' }}>
-            <form action={updateTicketStatus.bind(null, ticketId, 'won')} style={{ flex: 1 }}>
+            <form action={updateTicketStatus.bind(null, ticketId, 'won') as any} style={{ flex: 1 }}>
               <button style={{ width: '100%', padding: '12px', background: 'var(--green)', color: '#0C1410', fontWeight: 700, border: 'none', borderRadius: '8px' }}>✓ Mark as Won</button>
             </form>
-            <form action={updateTicketStatus.bind(null, ticketId, 'lost')} style={{ flex: 1 }}>
+            <form action={updateTicketStatus.bind(null, ticketId, 'lost') as any} style={{ flex: 1 }}>
               <button style={{ width: '100%', padding: '12px', background: '#C97C7C', color: '#fff', fontWeight: 700, border: 'none', borderRadius: '8px' }}>✗ Mark as Lost</button>
             </form>
           </div>
