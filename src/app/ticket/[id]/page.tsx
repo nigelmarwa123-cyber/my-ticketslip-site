@@ -117,7 +117,7 @@ export default async function TicketDetailPage(props: { params: Promise<{ id: st
           )}
         </div>
 
-        <form action={addComment.bind(null, ticketId)} style={{ display: 'flex', gap: '8px' }}>
+        <form action={addComment.bind(null, ticketId) as any} style={{ display: 'flex', gap: '8px' }}>
           <input 
             type="text" 
             name="body" 
