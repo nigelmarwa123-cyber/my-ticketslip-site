@@ -28,14 +28,14 @@ export function PreReactions({
     <div className="pre-reactions">
       <button 
         className="reaction-btn" 
-        onClick={(e) => { e.preventDefault(); startTransition(() => toggleReaction(ticketId, 'fire', pathname)) }}
+        onClick={(e) => { e.preventDefault(); startTransition(() => { toggleReaction(ticketId, 'fire', pathname) }) }}
         style={{ opacity: isPending ? 0.7 : 1, background: hasReactedFire ? '#3DDC84' : undefined, color: hasReactedFire ? '#0C1410' : undefined }}
       >
         🔥 I'm on this <span className="count" style={{ color: hasReactedFire ? '#0C1410' : undefined }}>{initialFireCount}</span>
       </button>
       <button 
         className="reaction-btn"
-        onClick={(e) => { e.preventDefault(); startTransition(() => toggleReaction(ticketId, 'risky', pathname)) }}
+        onClick={(e) => { e.preventDefault(); startTransition(() => { toggleReaction(ticketId, 'risky', pathname) }) }}
         style={{ opacity: isPending ? 0.7 : 1, background: hasReactedRisky ? '#FFB020' : undefined, color: hasReactedRisky ? '#0C1410' : undefined }}
       >
         😬 Risky <span className="count" style={{ color: hasReactedRisky ? '#0C1410' : undefined }}>{initialRiskyCount}</span>
@@ -65,12 +65,12 @@ export function TicketActionBar({
 
   const handleFlag = (e: React.MouseEvent) => {
     e.preventDefault()
-    startTransition(() => toggleFlag(ticketId, pathname))
+    startTransition(() => { toggleFlag(ticketId, pathname) })
   }
 
   const handleFollow = (e: React.MouseEvent) => {
     e.preventDefault()
-    startTransition(() => toggleFollow(posterId, pathname))
+    startTransition(() => { toggleFollow(posterId, pathname) })
   }
 
   const isHeavilyFlagged = initialFlags >= 10
