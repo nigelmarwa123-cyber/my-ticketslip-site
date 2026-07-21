@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { TicketCard } from '@/components/TicketCard'
 import { toggleFollow } from '@/app/actions/social'
+import EditProfileModal from '../EditProfileModal'
 import '@/app/feed.css' // Reuse feed css
 
 export default async function ProfilePage(props: { params: Promise<{ id: string }> }) {
@@ -124,7 +125,7 @@ export default async function ProfilePage(props: { params: Promise<{ id: string 
         <div style={{ marginTop: '20px', display: 'flex', gap: '12px', flexDirection: 'column' }}>
           {isOwnProfile ? (
             <>
-              <button style={{ width: '100%', padding: '10px', borderRadius: '8px', background: 'var(--line)', color: '#fff', border: 'none', fontWeight: 600 }}>Edit Profile</button>
+              <EditProfileModal initialUsername={profile.username} />
               <Link href="/bet-log" style={{ display: 'block', width: '100%', padding: '10px', borderRadius: '8px', background: 'var(--green)', color: '#0C1410', border: 'none', fontWeight: 700, textAlign: 'center', textDecoration: 'none' }}>📊 My Bet Log</Link>
             </>
           ) : (
